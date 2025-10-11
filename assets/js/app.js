@@ -138,9 +138,11 @@ function showChallengePage(challenge) {
   // Hide main content and show challenge page
   const app = $('#app');
   const toolbar = $('.toolbar');
+  const header = $('header');
   
   if (app) app.style.display = 'none';
   if (toolbar) toolbar.style.display = 'none';
+  if (header) header.style.display = 'none';
   
   // Update page title
   document.title = `${challenge.name} - Mendix CTF 2025`;
@@ -191,8 +193,13 @@ function showMainPage() {
   history.pushState({}, '', window.location.pathname);
   
   // Show main content and hide challenge page
-  $('#app').style.display = 'block';
-  $('.toolbar').style.display = 'flex';
+  const app = $('#app');
+  const toolbar = $('.toolbar');
+  const header = $('header');
+  
+  if (app) app.style.display = 'block';
+  if (toolbar) toolbar.style.display = 'flex';
+  if (header) header.style.display = 'block';
   
   const challengePage = $('#challenge-page');
   if (challengePage) {
