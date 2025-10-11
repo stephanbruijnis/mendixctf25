@@ -2,6 +2,8 @@ const state = {
   raw: [],
   query: '',
   category: '',
+  currentChallenge: null,
+  currentTab: 'details'
 };
 
 const $ = (sel, root=document) => root.querySelector(sel);
@@ -79,7 +81,7 @@ function renderCards(items){
     const id = btn.dataset.id;
     const challenge = state.raw.find(c => c.id.toString() === id);
     if (challenge) {
-      showDetailsModal(challenge);
+      showChallengePage(challenge);
     }
   }));
 }
@@ -123,68 +125,199 @@ function processMarkdown(text) {
   return processed;
 }
 
-function showDetailsModal(challenge) {
-  const modal = $('#modal');
-  const modalTitle = $('#modalTitle');
-  const modalBody = $('#modalBody');
+function showChallengePage(challenge) {
+  state.currentChallenge = challenge;
+  state.currentTab = 'details';
   
-  modalTitle.textContent = challenge.name || 'Challenge Details';
+  // Hide main content and show challenge page
+  $('#app').style.display = 'none';
+  $('header .toolbar').style.display = 'none';
   
-  const files = (challenge.files||[]).map(f=>`<li><a href="${escapeAttr(f)}" target="_blank" rel="noopener">${escapeHtml(fileName(f))}</a></li>`).join('');
-  const hints = (challenge.hints||[]).map(h=>`<li>${escapeHtml(h)}</li>`).join('');
-  const next = challenge.next_id ? `<div class="muted">Next challenge id: <span class="kbd">${escapeHtml(challenge.next_id)}</span></div>` : '';
+  // Update page title
+  document.title = `${challenge.name} - Mendix CTF 2025`;
   
-  modalBody.innerHTML = `
-    <div class="modal-section">
-      <h4>Category</h4>
-      <div class="badge">${escapeHtml(challenge.category || 'Uncategorized')}</div>
-    </div>
-    
-    <div class="modal-section">
-      <h4>Points</h4>
-      <div class="pts">${escapeHtml((challenge.value || 0).toString())} pts</div>
-    </div>
-    
-    ${challenge.description ? `<div class="modal-section">
-      <h4>Description</h4>
-      <div>${processMarkdown(challenge.description)}</div>
-    </div>` : ''}
-    
-    ${files ? `<div class="modal-section">
-      <h4>Files</h4>
-      <ul class="list">${files}</ul>
-    </div>` : ''}
-    
-    ${hints ? `<div class="modal-section">
-      <h4>Hints</h4>
-      <ul class="list">${hints}</ul>
-    </div>` : ''}
-    
-    ${challenge.attribution ? `<div class="modal-section">
-      <h4>Attribution</h4>
-      <div class="muted">${escapeHtml(challenge.attribution)}</div>
-    </div>` : ''}
-    
-    ${challenge.connection_info ? `<div class="modal-section">
-      <h4>Connection</h4>
-      <a href="${escapeAttr(challenge.connection_info)}" target="_blank" rel="noopener" class="btn secondary">Open Application</a>
-    </div>` : ''}
-    
-    ${next ? `<div class="modal-section">${next}</div>` : ''}
-  `;
+  // Show challenge page
+  let challengePage = $('#challenge-page');
+  if (!challengePage) {
+    challengePage = document.createElement('div');
+    challengePage.id = 'challenge-page';
+    challengePage.className = 'container';
+    document.querySelector('main').appendChild(challengePage);
+  }
   
-  modal.showModal();
+  challengePage.style.display = 'block';
+  challengePage.innerHTML = renderChallengePage(challenge);
+  
+  // Bind tab navigation
+  $$('#challenge-page .tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      state.currentTab = tab;
+      updateActiveTab();
+      renderTabContent();
+    });
+  });
+  
+  // Bind back button
+  $('#back-btn').addEventListener('click', () => {
+    showMainPage();
+  });
+  
+  updateActiveTab();
+  renderTabContent();
 }
 
-function openConn(text){
-  const dialog = $('#modal');
-  $('#connText').textContent = text || '';
-  $('#copyConn').onclick = ()=> copy(text || '');
-  $('#openLink').onclick = ()=>{
-    try{ const u = new URL(text); window.open(u.href, '_blank','noopener'); }
-    catch{ alert('No valid URL detected in connection info. Copied to clipboard instead.'); copy(text||''); }
-  };
-  dialog.showModal();
+function showMainPage() {
+  // Show main content and hide challenge page
+  $('#app').style.display = 'block';
+  $('header .toolbar').style.display = 'flex';
+  
+  const challengePage = $('#challenge-page');
+  if (challengePage) {
+    challengePage.style.display = 'none';
+  }
+  
+  // Reset page title
+  document.title = 'Mendix CTF — Challenges';
+  
+  state.currentChallenge = null;
+  state.currentTab = 'details';
+}
+
+function renderChallengePage(challenge) {
+  const title = escapeHtml(challenge.name || 'Untitled');
+  const category = escapeHtml(challenge.category || 'Uncategorized');
+  const points = escapeHtml((challenge.value || 0).toString());
+  const attribution = escapeHtml(challenge.attribution || '');
+  
+  return `
+    <div class="challenge-header">
+      <button id="back-btn" class="btn secondary">← Back to Challenges</button>
+      <div class="challenge-meta">
+        <h1 class="challenge-title">${title}</h1>
+        <div class="challenge-badges">
+          <span class="badge category-badge">${category}</span>
+          <span class="badge points-badge">${points} pts</span>
+          ${attribution ? `<span class="badge difficulty-badge">${attribution}</span>` : ''}
+        </div>
+      </div>
+    </div>
+    
+    <div class="challenge-tabs">
+      <button class="tab-btn" data-tab="details">Details</button>
+      <button class="tab-btn" data-tab="hints">Hints</button>
+      <button class="tab-btn" data-tab="writeup">Write-up</button>
+    </div>
+    
+    <div id="tab-content" class="tab-content">
+      <!-- Content will be rendered here -->
+    </div>
+  `;
+}
+
+function updateActiveTab() {
+  $$('#challenge-page .tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === state.currentTab);
+  });
+}
+
+function renderTabContent() {
+  const challenge = state.currentChallenge;
+  if (!challenge) return;
+  
+  const tabContent = $('#tab-content');
+  
+  switch (state.currentTab) {
+    case 'details':
+      tabContent.innerHTML = renderDetailsTab(challenge);
+      break;
+    case 'hints':
+      tabContent.innerHTML = renderHintsTab(challenge);
+      break;
+    case 'writeup':
+      tabContent.innerHTML = renderWriteupTab(challenge);
+      break;
+  }
+}
+
+function renderDetailsTab(challenge) {
+  const files = (challenge.files||[]).map(f=>`<li><a href="${escapeAttr(f)}" target="_blank" rel="noopener">${escapeHtml(fileName(f))}</a></li>`).join('');
+  const next = challenge.next_id ? `<div class="muted">Next challenge id: <span class="kbd">${escapeHtml(challenge.next_id)}</span></div>` : '';
+  
+  return `
+    <div class="tab-section">
+      <h3>Description</h3>
+      <div class="description-content">
+        ${processMarkdown(challenge.description || 'No description available.')}
+      </div>
+    </div>
+    
+    ${files ? `<div class="tab-section">
+      <h3>Files</h3>
+      <ul class="file-list">${files}</ul>
+    </div>` : ''}
+    
+    ${challenge.connection_info ? `<div class="tab-section">
+      <h3>Connection</h3>
+      <div class="connection-info">
+        <a href="${escapeAttr(challenge.connection_info)}" target="_blank" rel="noopener" class="btn primary">Open Application</a>
+        <code class="connection-url">${escapeHtml(challenge.connection_info)}</code>
+      </div>
+    </div>` : ''}
+    
+    ${next ? `<div class="tab-section">${next}</div>` : ''}
+  `;
+}
+
+function renderHintsTab(challenge) {
+  const hints = challenge.hints || [];
+  
+  if (hints.length === 0) {
+    return `
+      <div class="tab-section">
+        <div class="empty-state">
+          <h3>No hints available</h3>
+          <p>This challenge doesn't have any hints. Good luck!</p>
+        </div>
+      </div>
+    `;
+  }
+  
+  return `
+    <div class="tab-section">
+      <h3>Hints</h3>
+      <div class="hints-list">
+        ${hints.map((hint, index) => `
+          <div class="hint-item">
+            <div class="hint-header">
+              <span class="hint-number">Hint ${index + 1}</span>
+            </div>
+            <div class="hint-content">
+              ${escapeHtml(hint)}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderWriteupTab(challenge) {
+  return `
+    <div class="tab-section">
+      <div class="writeup-placeholder">
+        <h3>Write-up</h3>
+        <p>Community write-ups for this challenge will appear here after the CTF concludes.</p>
+        <div class="contribute-section">
+          <h4>Want to contribute?</h4>
+          <p>Share your solution and help others learn! Create a pull request with your write-up.</p>
+          <a href="https://github.com/jopterhorst/mendixctf25" target="_blank" rel="noopener" class="btn secondary">
+            Contribute on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function copy(text){
@@ -281,12 +414,18 @@ function bindUI(){
   $('#cat').addEventListener('change', e=>{ state.category = e.target.value; update(); });
   $('#reset').addEventListener('click', ()=>{ state.query=''; state.category=''; update(); hydrateFromState(); $('#q').value=''; $('#cat').value=''; });
 
-  // modal
-  $('#closeModal').addEventListener('click', ()=> $('#modal').close());
-  $('#modal').addEventListener('click', (e)=>{ const d = $('#modal'); const r = d.getBoundingClientRect(); if(e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) d.close(); });
-
   // shortcuts
-  window.addEventListener('keydown', (e)=>{ if(e.key === '/'){ e.preventDefault(); $('#q').focus(); } });
+  window.addEventListener('keydown', (e)=>{ 
+    if(e.key === '/'){ 
+      e.preventDefault(); 
+      if ($('#q').style.display !== 'none') {
+        $('#q').focus(); 
+      }
+    }
+    if(e.key === 'Escape' && state.currentChallenge){ 
+      showMainPage(); 
+    }
+  });
 }
 
 // ---- Lightweight runtime tests (do not alter app behavior) ----

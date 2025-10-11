@@ -1,10 +1,17 @@
-# Mendix CTF 2025 - Challenges Portal
+# Mendix CTF 2025 - Community Archive
 
-A web-based challenge browser for the Mendix Capture The Flag 2025 competition. This project provides an interactive interface to explore, filter, and solve various cybersecurity challenges across different difficulty levels.
+A community-maintained copy of the original Mendix CTF 2025 challenge portal. This project preserves the challenge data and provides a platform for sharing write-ups and solutions after the competition.
 
 ## 🎯 Overview
 
-This portal serves as a comprehensive hub for Mendix CTF 2025 challenges, featuring:
+This is a **community-driven archive** of the original Mendix CTF 2025 website, created to:
+
+- **Preserve challenge data** for educational purposes
+- **Provide a platform for write-ups** and solution sharing
+- **Maintain accessibility** to challenge information after the official CTF ends
+- **Support the cybersecurity learning community**
+
+The archived portal features:
 
 - **26 unique challenges** across three main categories
 - Interactive challenge browser with search and filtering capabilities
@@ -129,12 +136,28 @@ The `resources/files/` directory contains various file types needed for challeng
 
 ## 🤝 Contributing
 
-This is a community-driven project. Feel free to:
+This is a **community-driven archive project**. We encourage contributions to help preserve CTF knowledge:
 
-- Report issues or bugs
-- Suggest improvements
-- Add challenge write-ups or solutions (after the CTF ends)
-- Improve the user interface or add new features
+### How to Contribute:
+- **Add write-ups**: Share detailed solutions and explanations for challenges
+- **Improve documentation**: Enhance challenge descriptions and hints
+- **Report issues**: Help identify problems with the archived content
+- **Share insights**: Add analysis of Mendix-specific vulnerabilities and techniques
+- **Educational content**: Create tutorials based on the challenges
+
+### Write-up Guidelines:
+- Wait until after the official CTF concludes before sharing solutions
+- Include detailed explanations of vulnerabilities and exploitation techniques
+- Provide educational context for learning purposes
+- Respect the original challenge creators' work
+
+## 📚 Educational Purpose
+
+This archive serves as a learning resource for:
+- **Security researchers** studying Mendix-specific vulnerabilities
+- **Students** learning web application security
+- **CTF participants** preparing for future competitions
+- **Developers** understanding secure coding practices in Mendix
 
 ## 📋 Challenge Status
 
@@ -144,16 +167,35 @@ This is a community-driven project. Feel free to:
 | Patient Portal | 6 | 317-498 | ✅ Active |
 | Magic | 3 | 489-500 | ✅ Active |
 
-## ⚠️ Disclaimer
+## ⚠️ Important Notice
 
-This project is not officially affiliated with Mendix or the official Mendix CTF. It is a community-driven initiative designed to provide an enhanced user experience for CTF participants.
+**This is a community-maintained archive** and is not the official Mendix CTF website. 
 
-## 📝 License
+### About This Project:
+- **Source**: This is a copy of the original Mendix CTF 2025 challenge portal
+- **Purpose**: Community preservation of challenge data for educational use
+- **Status**: Archive project for post-CTF learning and write-ups
+- **Affiliation**: Not officially affiliated with Mendix or the original CTF organizers
 
-This project is intended for educational and competition purposes only. Please respect the CTF rules and guidelines when participating.
+### Original CTF Information:
+- The original Mendix CTF 2025 was organized by the official Mendix team
+- Challenge environments may no longer be accessible
+- This archive preserves the challenge descriptions, files, and metadata
+
+## 📝 License & Usage
+
+This project is intended for **educational purposes only**:
+- Use for learning web application security concepts
+- Study Mendix-specific vulnerabilities and techniques
+- Share knowledge through write-ups and solutions
+- Respect the original challenge creators' intellectual property
+
+**Please note**: Challenge environments referenced in the connection info may no longer be active.
 
 ---
 
-**Happy Hacking! 🚀**
+**Learning Never Stops! 🚀**
 
-*Last updated: October 2025*
+*Community archive maintained since October 2025*
+
+*Original Mendix CTF 2025 organized by the Mendix team*
