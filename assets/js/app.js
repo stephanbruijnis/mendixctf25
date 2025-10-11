@@ -314,6 +314,67 @@ function renderTabContent() {
       tabContent.innerHTML = content;
   }
   console.log('=== RENDER TAB CONTENT END ===');
+  
+  // Bind hint spoilers after content is rendered
+  if (state.currentTab === 'hints') {
+    setTimeout(bindHintSpoilers, 50); // Small delay to ensure DOM is updated
+  }
+}
+
+function bindHintSpoilers() {
+  const spoilers = $$('.hint-content.spoiler');
+  
+  spoilers.forEach(spoiler => {
+    spoiler.addEventListener('click', () => {
+      if (spoiler.classList.contains('revealed') || spoiler.classList.contains('revealing')) {
+        return; // Prevent multiple clicks during animation
+      }
+      
+      const overlay = spoiler.querySelector('.spoiler-overlay');
+      const timer = spoiler.querySelector('.spoiler-timer');
+      const timerBar = spoiler.querySelector('.timer-bar');
+      const statusElement = spoiler.closest('.hint-item').querySelector('.hint-status');
+      
+      // Start reveal animation
+      spoiler.classList.add('revealing');
+      overlay.style.opacity = '0';
+      
+      // Show timer
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        timer.style.display = 'block';
+        spoiler.classList.add('revealed');
+        spoiler.classList.remove('revealing');
+        
+        if (statusElement) {
+          statusElement.textContent = 'Revealed';
+          statusElement.style.color = 'var(--success)';
+        }
+        
+        // Start countdown animation
+        timerBar.style.animation = 'countdown 5s linear forwards';
+        
+        // Hide after 5 seconds
+        setTimeout(() => {
+          spoiler.classList.add('hiding');
+          
+          setTimeout(() => {
+            // Reset to hidden state
+            spoiler.classList.remove('revealed', 'hiding');
+            overlay.style.display = 'flex';
+            overlay.style.opacity = '1';
+            timer.style.display = 'none';
+            timerBar.style.animation = 'none';
+            
+            if (statusElement) {
+              statusElement.textContent = 'Click to reveal';
+              statusElement.style.color = '';
+            }
+          }, 300);
+        }, 5000);
+      }, 300);
+    });
+  });
 }
 
 function renderDetailsTab(challenge) {
@@ -362,14 +423,24 @@ function renderHintsTab(challenge) {
   return `
     <div class="tab-section">
       <h3>Hints</h3>
+      <div class="hints-notice">
+        <p>💡 Click on a hint to reveal it temporarily</p>
+      </div>
       <div class="hints-list">
         ${hints.map((hint, index) => `
           <div class="hint-item">
             <div class="hint-header">
               <span class="hint-number">Hint ${index + 1}</span>
+              <span class="hint-status">Click to reveal</span>
             </div>
-            <div class="hint-content">
-              ${escapeHtml(hint)}
+            <div class="hint-content spoiler" data-hint-index="${index}">
+              <div class="spoiler-overlay">
+                <span class="spoiler-text">Click to reveal hint</span>
+                <div class="spoiler-timer" style="display: none;">
+                  <div class="timer-bar"></div>
+                </div>
+              </div>
+              <div class="hint-text">${escapeHtml(hint)}</div>
             </div>
           </div>
         `).join('')}
