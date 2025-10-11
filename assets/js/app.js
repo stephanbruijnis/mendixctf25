@@ -420,6 +420,23 @@ function renderHintsTab(challenge) {
     `;
   }
   
+  // Process hints to handle both string and object formats, then sort by order
+  const processedHints = hints.map((hint, index) => {
+    if (typeof hint === 'string') {
+      // Legacy format - string only
+      return {
+        order: index + 1,
+        text: hint
+      };
+    } else {
+      // New format - object with order and text
+      return {
+        order: hint.order || index + 1,
+        text: hint.text || hint
+      };
+    }
+  }).sort((a, b) => a.order - b.order);
+  
   return `
     <div class="tab-section">
       <h3>Hints</h3>
@@ -427,20 +444,20 @@ function renderHintsTab(challenge) {
         <p>💡 Click on a hint to reveal it temporarily</p>
       </div>
       <div class="hints-list">
-        ${hints.map((hint, index) => `
+        ${processedHints.map((hint, index) => `
           <div class="hint-item">
             <div class="hint-header">
-              <span class="hint-number">Hint ${index + 1}</span>
+              <span class="hint-number">Hint ${hint.order}</span>
               <span class="hint-status">Click to reveal</span>
             </div>
-            <div class="hint-content spoiler" data-hint-index="${index}">
+            <div class="hint-content spoiler" data-hint-index="${index}" data-hint-order="${hint.order}">
               <div class="spoiler-overlay">
                 <span class="spoiler-text">Click to reveal hint</span>
                 <div class="spoiler-timer" style="display: none;">
                   <div class="timer-bar"></div>
                 </div>
               </div>
-              <div class="hint-text">${escapeHtml(hint)}</div>
+              <div class="hint-text">${escapeHtml(hint.text)}</div>
             </div>
           </div>
         `).join('')}

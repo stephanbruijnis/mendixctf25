@@ -239,7 +239,20 @@
     "tags": [],
     "attribution": "Medium",
     "value": 157,
-    "hints": [],
+    "hints": [
+      {
+        "order": 1,
+        "text": "What happens when people forget their passwords?"
+      },
+      {
+        "order": 2,
+        "text": "Look for common password recovery mechanisms."
+      },
+      {
+        "order": 3,
+        "text": "Sometimes the simplest solutions are built right into the application."
+      }
+    ],
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
@@ -305,7 +318,10 @@
     "attribution": "Easy",
     "value": 120,
     "hints": [
-      "Where do you use your password?"
+      {
+        "order": 1,
+        "text": "Where do you use your password?"
+      }
     ],
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
