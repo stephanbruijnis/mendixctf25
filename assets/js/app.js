@@ -140,9 +140,20 @@ function showChallengePage(challenge) {
   const toolbar = $('.toolbar');
   const header = $('header');
   
-  if (app) app.style.display = 'none';
-  if (toolbar) toolbar.style.display = 'none';
-  if (header) header.style.display = 'none';
+  console.log('Elements found - app:', !!app, 'toolbar:', !!toolbar, 'header:', !!header);
+  
+  if (app) {
+    app.style.display = 'none';
+    console.log('Hidden app');
+  }
+  if (toolbar) {
+    toolbar.style.display = 'none';
+    console.log('Hidden toolbar');
+  }
+  if (header) {
+    header.style.display = 'none';
+    console.log('Hidden header');
+  }
   
   // Update page title
   document.title = `${challenge.name} - Mendix CTF 2025`;
@@ -153,23 +164,32 @@ function showChallengePage(challenge) {
     challengePage = document.createElement('div');
     challengePage.id = 'challenge-page';
     challengePage.className = 'container';
-    const main = document.querySelector('main');
-    if (main) {
-      main.appendChild(challengePage);
+    // Insert after the header instead of inside main
+    const header = document.querySelector('header');
+    if (header && header.nextSibling) {
+      header.parentNode.insertBefore(challengePage, header.nextSibling);
+    } else if (header) {
+      header.parentNode.appendChild(challengePage);
     } else {
       document.body.appendChild(challengePage);
     }
+    console.log('Created and inserted challenge page element');
   }
   
   challengePage.style.display = 'block';
   const pageContent = renderChallengePage(challenge);
-  console.log('Generated page content:', pageContent);
+  console.log('Generated page content length:', pageContent.length);
+  console.log('First 200 chars:', pageContent.substring(0, 200));
   challengePage.innerHTML = pageContent;
+  console.log('Challenge page innerHTML set');
   
   // Bind tab navigation
-  $$('#challenge-page .tab-btn').forEach(btn => {
+  const tabBtns = $$('#challenge-page .tab-btn');
+  console.log('Found tab buttons:', tabBtns.length);
+  tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const tab = btn.dataset.tab;
+      console.log('Tab clicked:', tab);
       state.currentTab = tab;
       updateActiveTab();
       renderTabContent();
@@ -178,14 +198,18 @@ function showChallengePage(challenge) {
   
   // Bind back button
   const backBtn = $('#back-btn');
+  console.log('Found back button:', !!backBtn);
   if (backBtn) {
     backBtn.addEventListener('click', () => {
+      console.log('Back button clicked');
       showMainPage();
     });
   }
   
+  console.log('About to call updateActiveTab and renderTabContent');
   updateActiveTab();
   renderTabContent();
+  console.log('Challenge page setup complete');
 }
 
 function showMainPage() {
@@ -251,6 +275,7 @@ function updateActiveTab() {
 }
 
 function renderTabContent() {
+  console.log('=== RENDER TAB CONTENT START ===');
   const challenge = state.currentChallenge;
   if (!challenge) {
     console.warn('No current challenge found');
@@ -258,6 +283,7 @@ function renderTabContent() {
   }
   
   const tabContent = $('#tab-content');
+  console.log('Tab content element found:', !!tabContent);
   if (!tabContent) {
     console.warn('Tab content element not found');
     return;
@@ -265,20 +291,29 @@ function renderTabContent() {
   
   console.log('Rendering tab:', state.currentTab, 'for challenge:', challenge.name);
   
+  let content = '';
   switch (state.currentTab) {
     case 'details':
-      tabContent.innerHTML = renderDetailsTab(challenge);
+      content = renderDetailsTab(challenge);
+      console.log('Details content generated, length:', content.length);
+      tabContent.innerHTML = content;
       break;
     case 'hints':
-      tabContent.innerHTML = renderHintsTab(challenge);
+      content = renderHintsTab(challenge);
+      console.log('Hints content generated, length:', content.length);
+      tabContent.innerHTML = content;
       break;
     case 'writeup':
-      tabContent.innerHTML = renderWriteupTab(challenge);
+      content = renderWriteupTab(challenge);
+      console.log('Writeup content generated, length:', content.length);
+      tabContent.innerHTML = content;
       break;
     default:
       console.warn('Unknown tab:', state.currentTab);
-      tabContent.innerHTML = renderDetailsTab(challenge);
+      content = renderDetailsTab(challenge);
+      tabContent.innerHTML = content;
   }
+  console.log('=== RENDER TAB CONTENT END ===');
 }
 
 function renderDetailsTab(challenge) {
