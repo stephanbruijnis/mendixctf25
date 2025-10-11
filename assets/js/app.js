@@ -126,12 +126,21 @@ function processMarkdown(text) {
 }
 
 function showChallengePage(challenge) {
+  console.log('Showing challenge page for:', challenge.name, challenge);
+  
   state.currentChallenge = challenge;
   state.currentTab = 'details';
   
+  // Update URL
+  const challengeSlug = challenge.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  history.pushState({ challengeId: challenge.id }, '', `#challenge/${challenge.id}/${challengeSlug}`);
+  
   // Hide main content and show challenge page
-  $('#app').style.display = 'none';
-  $('header .toolbar').style.display = 'none';
+  const app = $('#app');
+  const toolbar = $('.toolbar');
+  
+  if (app) app.style.display = 'none';
+  if (toolbar) toolbar.style.display = 'none';
   
   // Update page title
   document.title = `${challenge.name} - Mendix CTF 2025`;
@@ -142,11 +151,18 @@ function showChallengePage(challenge) {
     challengePage = document.createElement('div');
     challengePage.id = 'challenge-page';
     challengePage.className = 'container';
-    document.querySelector('main').appendChild(challengePage);
+    const main = document.querySelector('main');
+    if (main) {
+      main.appendChild(challengePage);
+    } else {
+      document.body.appendChild(challengePage);
+    }
   }
   
   challengePage.style.display = 'block';
-  challengePage.innerHTML = renderChallengePage(challenge);
+  const pageContent = renderChallengePage(challenge);
+  console.log('Generated page content:', pageContent);
+  challengePage.innerHTML = pageContent;
   
   // Bind tab navigation
   $$('#challenge-page .tab-btn').forEach(btn => {
@@ -159,18 +175,24 @@ function showChallengePage(challenge) {
   });
   
   // Bind back button
-  $('#back-btn').addEventListener('click', () => {
-    showMainPage();
-  });
+  const backBtn = $('#back-btn');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      showMainPage();
+    });
+  }
   
   updateActiveTab();
   renderTabContent();
 }
 
 function showMainPage() {
+  // Update URL
+  history.pushState({}, '', window.location.pathname);
+  
   // Show main content and hide challenge page
   $('#app').style.display = 'block';
-  $('header .toolbar').style.display = 'flex';
+  $('.toolbar').style.display = 'flex';
   
   const challengePage = $('#challenge-page');
   if (challengePage) {
@@ -223,9 +245,18 @@ function updateActiveTab() {
 
 function renderTabContent() {
   const challenge = state.currentChallenge;
-  if (!challenge) return;
+  if (!challenge) {
+    console.warn('No current challenge found');
+    return;
+  }
   
   const tabContent = $('#tab-content');
+  if (!tabContent) {
+    console.warn('Tab content element not found');
+    return;
+  }
+  
+  console.log('Rendering tab:', state.currentTab, 'for challenge:', challenge.name);
   
   switch (state.currentTab) {
     case 'details':
@@ -237,6 +268,9 @@ function renderTabContent() {
     case 'writeup':
       tabContent.innerHTML = renderWriteupTab(challenge);
       break;
+    default:
+      console.warn('Unknown tab:', state.currentTab);
+      tabContent.innerHTML = renderDetailsTab(challenge);
   }
 }
 
@@ -407,12 +441,20 @@ function hydrateFromState(){
   $('#q').value = state.query;
   $('#cat').value = state.category;
   update();
+  
+  // Handle initial route
+  handleRoute();
 }
 
 function bindUI(){
   $('#q').addEventListener('input', e=>{ state.query = e.target.value; update(); });
   $('#cat').addEventListener('change', e=>{ state.category = e.target.value; update(); });
   $('#reset').addEventListener('click', ()=>{ state.query=''; state.category=''; update(); hydrateFromState(); $('#q').value=''; $('#cat').value=''; });
+
+  // Handle browser back/forward buttons
+  window.addEventListener('popstate', (e) => {
+    handleRoute();
+  });
 
   // shortcuts
   window.addEventListener('keydown', (e)=>{ 
@@ -426,6 +468,28 @@ function bindUI(){
       showMainPage(); 
     }
   });
+}
+
+function handleRoute() {
+  const hash = window.location.hash;
+  
+  if (hash.startsWith('#challenge/')) {
+    const parts = hash.split('/');
+    const challengeId = parts[1];
+    
+    if (challengeId && state.raw.length > 0) {
+      const challenge = state.raw.find(c => c.id.toString() === challengeId);
+      if (challenge) {
+        showChallengePage(challenge);
+        return;
+      }
+    }
+  }
+  
+  // Default: show main page
+  if (state.currentChallenge) {
+    showMainPage();
+  }
 }
 
 // ---- Lightweight runtime tests (do not alter app behavior) ----
