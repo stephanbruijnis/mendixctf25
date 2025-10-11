@@ -50,7 +50,7 @@ Focuses on web application security fundamentals including:
 - API exploitation
 - Business logic flaws
 
-**Difficulty Range:** 106-387 points
+**Point Range:** 106-387 points *(Lower points = easier challenges)*
 
 ### 🏥 Patient Portal - Hard to Insane
 *6 challenges for advanced players*
@@ -62,7 +62,7 @@ Advanced security concepts including:
 - Access control bypasses
 - Advanced injection techniques
 
-**Difficulty Range:** 317-498 points
+**Point Range:** 317-498 points *(Higher points = fewer teams solved them)*
 
 ### ✨ Magic
 *3 high-level challenges*
@@ -72,7 +72,17 @@ Expert-level challenges featuring:
 - Advanced bypass techniques
 - Complex security analysis
 
-**Difficulty Range:** 489-500 points
+**Point Range:** 489-500 points *(Highest points = most difficult)*
+
+## 🏆 Scoring System
+
+The point values shown represent the **final scores** after the CTF 2025 event concluded. The scoring works as follows:
+
+- **Lower Points = Easier Challenges**: More teams found the flag, so points were lower
+- **Higher Points = Harder Challenges**: Fewer teams solved them, so points remained higher
+- **Challenges are sorted** from easiest to hardest within each category based on final point values
+
+This dynamic scoring system means that the final point values reflect the actual difficulty experienced by participants during the event.
 
 ## 🚀 Getting Started
 
@@ -161,11 +171,13 @@ This archive serves as a learning resource for:
 
 ## 📋 Challenge Status
 
-| Category | Total Challenges | Points Range | Status |
-|----------|------------------|--------------|---------|
-| Pizza Mario | 19 | 106-387 | ✅ Active |
-| Patient Portal | 6 | 317-498 | ✅ Active |
-| Magic | 3 | 489-500 | ✅ Active |
+| Category | Total Challenges | Point Range | Difficulty |
+|----------|------------------|-------------|------------|
+| Pizza Mario | 19 | 106-387 | Beginner → Medium |
+| Patient Portal | 6 | 317-498 | Hard → Insane |
+| Magic | 3 | 489-500 | Expert Level |
+
+*Note: Lower points indicate easier challenges (more teams solved them)*
 
 ## ⚠️ Important Notice
 

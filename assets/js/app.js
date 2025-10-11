@@ -53,7 +53,7 @@ function renderCards(items){
     }
   });
   
-  // Sort each section by points ascending (lowest to highest)
+  // Sort each section by points ascending (lowest to highest = easiest to hardest)
   Object.keys(sections).forEach(sectionKey => {
     sections[sectionKey].sort((a, b) => (a.value || 0) - (b.value || 0));
   });
