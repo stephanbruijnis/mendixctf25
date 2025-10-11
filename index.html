@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mendix CTF — Challenges</title>
+  <meta name="description" content="Browse and solve Mendix Capture The Flag challenges." />
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="hero">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">Mendix Capture The Flag</div>
+          <div class="subtitle">Explore challenges, filter by category & tags, and dive into connection details.</div>
+        </div>
+      </div>
+      <div class="toolbar" role="region" aria-label="Filters and search">
+        <div class="field">
+          <input id="q" class="input" placeholder="Search challenges (press / to focus)…" aria-label="Search" />
+        </div>
+        <div class="field">
+          <select id="cat" aria-label="Category">
+            <option value="">All categories</option>
+          </select>
+        </div>
+        <div class="field">
+          <button id="reset" class="btn secondary" title="Reset filters">Reset</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="app" aria-live="polite">
+    <div id="sections-container">
+      <section id="pizza-mario-section" class="challenge-section">
+        <h2 class="section-title">Pizza Mario - Beginner to Medium</h2>
+        <div id="pizza-mario-grid" class="grid" role="list"></div>
+      </section>
+      
+      <section id="patient-portal-section" class="challenge-section">
+        <h2 class="section-title">Patient Portal - Hard to Insane</h2>
+        <div id="patient-portal-grid" class="grid" role="list"></div>
+      </section>
+      
+      <section id="magic-section" class="challenge-section">
+        <h2 class="section-title">Magic</h2>
+        <div id="magic-grid" class="grid" role="list"></div>
+      </section>
+    </div>
+    <div id="empty" class="empty" hidden>No challenges found. Try clearing filters.</div>
+  </main>
+
+  <footer class="footer">
+    Not officially affiliated with Mendix or Mendix CTF. Community driven.
+  </footer>
+
+  <dialog id="modal">
+    <div class="modal-head">
+      <strong id="modalTitle">Challenge Details</strong>
+      <button id="closeModal" class="btn secondary" aria-label="Close">Close</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Challenge details will be populated here -->
+    </div>
+  </dialog>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
