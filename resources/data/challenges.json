@@ -304,7 +304,9 @@
     "tags": [],
     "attribution": "Easy",
     "value": 120,
-    "hints": [],
+    "hints": [
+      "Where do you use your password?"
+    ],
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
