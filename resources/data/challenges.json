@@ -91,7 +91,20 @@
     "tags": [],
     "attribution": "Medium",
     "value": 461,
-    "hints": [],
+    "hints": [
+      {
+        "order": 1,
+        "text": "Find out which pages are available for your user by inspecting /xas/ requests"
+      },
+      {
+        "order": 2,
+        "text": "Try opening an interesting-looking page via the console"
+      },
+      {
+        "order": 3,
+        "text": "If you don't know how, try using mx.ui.openForm2()"
+      }
+    ],
     "connection_info": "https://patientportal2025.mendixctf.com",
     "next_id": null,
     "category": "Patient Portal - Hard to Insane",
