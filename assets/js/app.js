@@ -105,11 +105,11 @@ function cardHTML(it){
   
   // Check if challenge has write-ups
   const hasWriteups = it.writeups && it.writeups.length > 0;
-  const writeupIndicator = hasWriteups ? `<span class="writeup-indicator" title="Write-up available">📝</span>` : '';
+  const writeupIndicator = hasWriteups ? `<span class="writeup-indicator" title="Write-up available"></span>` : '';
   
   // Check if challenge has hints
   const hasHints = it.hints && it.hints.length > 0;
-  const hintIndicator = hasHints ? `<span class="hint-indicator" title="Hints available">💡</span>` : '';
+  const hintIndicator = hasHints ? `<span class="hint-indicator" title="Hints available"></span>` : '';
 
   return `
   <article class="card challenge-card" role="listitem" aria-label="${title}" data-challenge-id="${escapeAttr(id)}">
