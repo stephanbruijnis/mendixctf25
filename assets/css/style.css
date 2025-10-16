@@ -72,7 +72,7 @@ header{
 
 .toolbar{display:grid; grid-template-columns: 1fr; gap:12px; padding:12px 0 16px}
 @media(min-width:640px){
-  .toolbar{grid-template-columns: 2fr 1fr 0.8fr;}
+  .toolbar{grid-template-columns: 2fr 1fr 0.8fr 1fr;}
 }
 
 .field{position:relative}

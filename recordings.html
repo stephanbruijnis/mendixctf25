@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mendix CTF — Workshop Recordings</title>
+  <meta name="description" content="Watch recordings from Mendix CTF workshop sessions." />
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .recordings-hero {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 20px 0;
+    }
+    
+    .recordings-title {
+      font-size: clamp(28px, 5vw, 36px);
+      font-weight: 800;
+      margin: 0 0 12px 0;
+      color: var(--brand-muted);
+      letter-spacing: 0.3px;
+    }
+    
+    .recordings-subtitle {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    
+    .day-section {
+      margin-bottom: 50px;
+    }
+    
+    .day-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 0 0 24px 0;
+      color: var(--brand-2);
+      letter-spacing: 0.3px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .day-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--brand-2);
+      border-radius: 2px;
+    }
+    
+    .recordings-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    @media(min-width: 768px) {
+      .recordings-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    @media(min-width: 1200px) {
+      .recordings-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+    
+    .recording-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .recording-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--brand-2);
+      box-shadow: 0 12px 40px rgba(198,217,46,0.25);
+    }
+    
+    .recording-card::before {
+      content:""; 
+      position:absolute; 
+      inset:0; 
+      border-radius: inherit; 
+      padding:1px;
+      background: rgba(198,217,46,0.15);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; 
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude; 
+      opacity:.3;
+      pointer-events:none;
+    }
+    
+    .recording-header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(135deg, var(--panel), rgba(198,217,46,0.05));
+    }
+    
+    .recording-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--brand-2);
+      color: var(--bg);
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    
+    .recording-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    
+    .recording-presenter {
+      color: var(--brand-2);
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .recording-body {
+      padding: 20px;
+    }
+    
+    .play-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: var(--brand-2);
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      position: relative;
+      box-shadow: var(--card-glow);
+      transition: all 0.3s ease;
+    }
+    
+    .recording-card:hover .play-icon {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(198,217,46,0.4);
+    }
+    
+    .play-icon::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 16px solid var(--bg);
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      margin-left: 4px;
+    }
+    
+    .watch-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--panel-strong);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--brand-2);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .recording-card:hover .watch-btn {
+      background: var(--brand-2);
+      color: var(--bg);
+      border-color: var(--brand-2);
+    }
+    
+    .back-to-challenges {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 30px;
+      padding: 10px 16px;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    
+    .back-to-challenges:hover {
+      background: var(--panel-strong);
+      transform: translateX(-2px);
+    }
+    
+    .external-link-icon {
+      width: 14px;
+      height: 14px;
+      position: relative;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    
+    .external-link-icon::before {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 2px solid currentColor;
+      border-bottom: none;
+      border-left: none;
+      top: 0;
+      right: 0;
+    }
+    
+    .external-link-icon::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 2px;
+      background: currentColor;
+      bottom: 2px;
+      left: 0;
+      box-shadow: 
+        0 -2px 0 currentColor,
+        0 -4px 0 currentColor,
+        2px -2px 0 currentColor,
+        4px 0 0 currentColor;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="hero">
+        <div class="logo" aria-hidden="true">25</div>
+        <div>
+          <div class="title">Mendix Capture The Flag</div>
+          <div class="subtitle">Workshop recordings from the event.</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="index.html" class="back-to-challenges">
+      ← Back to Challenges
+    </a>
+    
+    <div class="recordings-hero">
+      <h1 class="recordings-title">Workshop Recordings</h1>
+      <p class="recordings-subtitle">
+        Watch the recorded sessions from our security workshops and presentations. 
+        Learn from experts about security best practices, hacking techniques, and Mendix platform insights.
+      </p>
+    </div>
+
+    <div class="day-section">
+      <h2 class="day-title">Day 1</h2>
+      <div class="recordings-grid">
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/E3SeeexD7Gy2xxvBfk5bv4', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">1</div>
+            <h3 class="recording-title">Hacking Basics</h3>
+            <div class="recording-presenter">by Dirk van Veen</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/E3SeeexD7Gy2xxvBfk5bv4" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/qM8zt9ybrerNTqPxq4WwDV', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">2</div>
+            <h3 class="recording-title">Break It Like a Tester</h3>
+            <div class="recording-presenter">by Waad Alatiyat and Mohammad Abu Qadourah</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/qM8zt9ybrerNTqPxq4WwDV" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/49Saio3x53asVv27fZxJAa', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">3</div>
+            <h3 class="recording-title">Project start 101</h3>
+            <div class="recording-presenter">by Rene van Hofwegen</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/49Saio3x53asVv27fZxJAa" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/89f11Nwad415ZsCjk32crz', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">4</div>
+            <h3 class="recording-title">Our journey to ISO 27001</h3>
+            <div class="recording-presenter">by Kevin Wilson</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/89f11Nwad415ZsCjk32crz" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/HfKWbxAPWHwZdxT188fr5t', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">5</div>
+            <h3 class="recording-title">Beyond Passwords</h3>
+            <div class="recording-presenter">by Nuno Costa</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/HfKWbxAPWHwZdxT188fr5t" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/KTTJedC77eM8VCG2RcBB6W', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">6</div>
+            <h3 class="recording-title">Hacking Basics</h3>
+            <div class="recording-presenter">by Dirk van Veen, Americas Edition</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/KTTJedC77eM8VCG2RcBB6W" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/CpsGrPteJKxpBbbqtNdsoy', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">7</div>
+            <h3 class="recording-title">Security best practices: look beyond Studio Pro</h3>
+            <div class="recording-presenter">by Tom Brand</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/CpsGrPteJKxpBbbqtNdsoy" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/npwkdY3cTBL8VJUXXJAAwY', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">8</div>
+            <h3 class="recording-title">Securing Mendix Applications with Content Security Policy</h3>
+            <div class="recording-presenter">by Neel Deesai</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/npwkdY3cTBL8VJUXXJAAwY" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/E2QfdcfehQjzhCbmyQjjLP', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">9</div>
+            <h3 class="recording-title">Mendix is Engineering, Not Just Low-Code</h3>
+            <div class="recording-presenter">by Jan Stöckli</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/E2QfdcfehQjzhCbmyQjjLP" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-section">
+      <h2 class="day-title">Day 2</h2>
+      <div class="recordings-grid">
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/ULyG8MUo9Y16oewDPCYJbP', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">1</div>
+            <h3 class="recording-title">The S-Unit top 10 Mendix Vulnerabilities</h3>
+            <div class="recording-presenter">by Dirk van Veen</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/ULyG8MUo9Y16oewDPCYJbP" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/3VW7W5EePAy8uTAGTpMhFn', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">2</div>
+            <h3 class="recording-title">Mendix File Uploads: A Hidden Security Risk</h3>
+            <div class="recording-presenter">by Philipp Hueber</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/3VW7W5EePAy8uTAGTpMhFn" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/9DWh7XRuhH6DkkMXzNRUqR', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">3</div>
+            <h3 class="recording-title">5 things to consider when implementing an AI-agent</h3>
+            <div class="recording-presenter">by Emily von Bergen and Tom Warmerdam</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/9DWh7XRuhH6DkkMXzNRUqR" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/2kisLEUnP2GhPh2h3AdLSG', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">4</div>
+            <h3 class="recording-title">Front-end manipulation with CSS & JavaScript</h3>
+            <div class="recording-presenter">by Jan Schneider</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/2kisLEUnP2GhPh2h3AdLSG" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/GccsPZUk2w5r8bWT3k4L5R', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">5</div>
+            <h3 class="recording-title">Mendix 11 Unpacked</h3>
+            <div class="recording-presenter">by Satyam Singh and Bart van den Heuvel</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/GccsPZUk2w5r8bWT3k4L5R" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/xKJZaZNGYLhWUQfr193bpL', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">6</div>
+            <h3 class="recording-title">Dynamic Roles, Secure Goals</h3>
+            <div class="recording-presenter">by Nico Mouton</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/xKJZaZNGYLhWUQfr193bpL" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/yXbGPZcC9bm81K8aoRRJFZ', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">7</div>
+            <h3 class="recording-title">Challenge Explanations</h3>
+            <div class="recording-presenter">by Dirk van Veen</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/yXbGPZcC9bm81K8aoRRJFZ" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/fAtSFvwhkGHqJ4HWQE88kX', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">8</div>
+            <h3 class="recording-title">Musical Performance</h3>
+            <div class="recording-presenter">by Wouter Penris</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/fAtSFvwhkGHqJ4HWQE88kX" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/39aBDtUe6mDW6VkWu2ktcf', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">9</div>
+            <h3 class="recording-title">EMEA Award Ceremony</h3>
+            <div class="recording-presenter"></div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/39aBDtUe6mDW6VkWu2ktcf" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/msezmcPkcgAupns2go13tZ', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">10</div>
+            <h3 class="recording-title">Securing APIs</h3>
+            <div class="recording-presenter">by Scott Perkins</div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/msezmcPkcgAupns2go13tZ" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+
+        <div class="recording-card" onclick="window.open('https://videoshare.mendix.com/watch/MwybJ4EaqqxhFBT6e61kCC', '_blank')">
+          <div class="recording-header">
+            <div class="recording-number">11</div>
+            <h3 class="recording-title">Americas Award Ceremony</h3>
+            <div class="recording-presenter"></div>
+          </div>
+          <div class="recording-body">
+            <div class="play-icon"></div>
+            <a href="https://videoshare.mendix.com/watch/MwybJ4EaqqxhFBT6e61kCC" target="_blank" rel="noopener" class="watch-btn">
+              <span class="external-link-icon"></span>
+              Watch Recording
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    Not officially affiliated with Mendix or Mendix CTF. Community driven platform for CTF enthusiasts. 🚩
+  </footer>
+</body>
+</html>
