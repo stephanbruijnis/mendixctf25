@@ -56,7 +56,15 @@
     "connection_info": "https://patientportal2025.mendixctf.com",
     "next_id": null,
     "category": "Patient Portal - Hard to Insane",
-    "description": "Alright, you got some skills! That is not happening again though! Try to export ID 31337 again."
+    "description": "Alright, you got some skills! That is not happening again though! Try to export ID 31337 again.",
+    "writeups": [
+      {
+        "title": "Capture the Flag 2025 - Patient Exporter",
+        "author": "Squad Apps",
+        "url": "https://www.squad-apps.com/en/blog/capture-the-flag-2025-patient-exporter",
+        "platform": "Squad Apps Blog"
+      }
+    ]
   },
   {
     "id": 35,
