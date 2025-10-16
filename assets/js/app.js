@@ -467,18 +467,60 @@ function renderHintsTab(challenge) {
 }
 
 function renderWriteupTab(challenge) {
+  const writeups = challenge.writeups || [];
+  
+  if (writeups.length === 0) {
+    return `
+      <div class="tab-section">
+        <div class="writeup-placeholder">
+          <h3>Write-up</h3>
+          <p>Community write-ups for this challenge will appear here after the CTF concludes.</p>
+          <div class="contribute-section">
+            <h4>Want to contribute?</h4>
+            <p>Share your solution and help others learn! Create a pull request with your write-up.</p>
+            <a href="https://github.com/jopterhorst/mendixctf25" target="_blank" rel="noopener" class="btn secondary">
+              Contribute on GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  
   return `
     <div class="tab-section">
-      <div class="writeup-placeholder">
-        <h3>Write-up</h3>
-        <p>Community write-ups for this challenge will appear here after the CTF concludes.</p>
-        <div class="contribute-section">
-          <h4>Want to contribute?</h4>
-          <p>Share your solution and help others learn! Create a pull request with your write-up.</p>
-          <a href="https://github.com/jopterhorst/mendixctf25" target="_blank" rel="noopener" class="btn secondary">
-            Contribute on GitHub
-          </a>
-        </div>
+      <h3>Community Write-ups</h3>
+      <p class="writeups-intro">The following write-ups have been contributed by the community:</p>
+      
+      <div class="writeups-list">
+        ${writeups.map(writeup => `
+          <div class="writeup-item">
+            <div class="writeup-header">
+              <h4 class="writeup-title">
+                <a href="${escapeAttr(writeup.url)}" target="_blank" rel="noopener">
+                  ${escapeHtml(writeup.title)}
+                </a>
+              </h4>
+              <div class="writeup-meta">
+                <span class="writeup-author">by ${escapeHtml(writeup.author)}</span>
+                ${writeup.platform ? `<span class="writeup-platform">${escapeHtml(writeup.platform)}</span>` : ''}
+              </div>
+            </div>
+            <div class="writeup-actions">
+              <a href="${escapeAttr(writeup.url)}" target="_blank" rel="noopener" class="btn primary">
+                Read Write-up
+              </a>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      
+      <div class="contribute-section">
+        <h4>Want to add your write-up?</h4>
+        <p>Share your solution and help others learn! Create a pull request to add your write-up to this challenge.</p>
+        <a href="https://github.com/jopterhorst/mendixctf25" target="_blank" rel="noopener" class="btn secondary">
+          Contribute on GitHub
+        </a>
       </div>
     </div>
   `;

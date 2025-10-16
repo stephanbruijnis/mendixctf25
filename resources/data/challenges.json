@@ -178,7 +178,15 @@
     "connection_info": "https://patientportal2025.mendixctf.com",
     "next_id": null,
     "category": "Patient Portal - Hard to Insane",
-    "description": "The hospital has been under financial strain for years... Can you discover the details of the new budget?"
+    "description": "The hospital has been under financial strain for years... Can you discover the details of the new budget?",
+    "writeups": [
+      {
+        "title": "Write-up: Mendix CTF 2025 - Fiscal Life Support (Tier 2)",
+        "author": "Johan Flikweert",
+        "url": "https://medium.com/@johan.flikweert/write-up-mendix-ctf-2025-fiscal-life-support-tier-2-87a67a8db997",
+        "platform": "Medium"
+      }
+    ]
   },
   {
     "id": 37,
