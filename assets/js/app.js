@@ -76,14 +76,19 @@ function renderCards(items){
   const totalItems = Object.values(sections).reduce((sum, arr) => sum + arr.length, 0);
   $('#empty').hidden = totalItems > 0;
 
-  // wire buttons
-  $$('.btn-details').forEach(btn => btn.addEventListener('click', ()=>{
-    const id = btn.dataset.id;
-    const challenge = state.raw.find(c => c.id.toString() === id);
-    if (challenge) {
-      showChallengePage(challenge);
-    }
-  }));
+  // wire card clicks
+  $$('.challenge-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const challengeId = card.dataset.challengeId;
+      const challenge = state.raw.find(c => c.id.toString() === challengeId);
+      if (challenge) {
+        showChallengePage(challenge);
+      }
+    });
+    
+    // Add hover cursor
+    card.style.cursor = 'pointer';
+  });
 }
 
 function cardHTML(it){
@@ -97,19 +102,27 @@ function cardHTML(it){
   const hints = (it.hints||[]).map(h=>`<li>${escapeHtml(h)}</li>`).join('');
   const conn = (it.connection_info || '').trim();
   const next = it.next_id ? `<div class="muted">Next challenge id: <span class="kbd">${escapeHtml(it.next_id)}</span></div>` : '';
+  
+  // Check if challenge has write-ups
+  const hasWriteups = it.writeups && it.writeups.length > 0;
+  const writeupIndicator = hasWriteups ? `<span class="writeup-indicator" title="Write-up available">📝</span>` : '';
+  
+  // Check if challenge has hints
+  const hasHints = it.hints && it.hints.length > 0;
+  const hintIndicator = hasHints ? `<span class="hint-indicator" title="Hints available">💡</span>` : '';
 
   return `
-  <article class="card" role="listitem" aria-label="${title}">
+  <article class="card challenge-card" role="listitem" aria-label="${title}" data-challenge-id="${escapeAttr(id)}">
     <div class="card-head">
+      <div class="card-indicators">
+        ${writeupIndicator}
+        ${hintIndicator}
+      </div>
       <span class="pts">${pts} pts</span>
     </div>
     <h3 class="card-title">${title}</h3>
     <p class="card-desc">${desc}</p>
     <div class="chips">${tags}</div>
-    <div class="actions">
-      <button class="btn btn-details" data-id="${escapeAttr(id)}">Details</button>
-      ${conn ? `<a href="${escapeAttr(conn)}" target="_blank" rel="noopener" class="btn secondary">Open Application</a>` : ''}
-    </div>
   </article>`;
 }
 
