@@ -410,7 +410,12 @@ function renderDetailsTab(challenge) {
     ${challenge.connection_info ? `<div class="tab-section">
       <h3>Connection</h3>
       <div class="connection-info">
-        <a href="${escapeAttr(challenge.connection_info)}" target="_blank" rel="noopener" class="btn primary">Open Application</a>
+        <div class="connection-actions">
+          <a href="${escapeAttr(challenge.connection_info)}" target="_blank" rel="noopener" class="btn primary">
+            <span class="external-link-icon"></span>
+            Open Application
+          </a>
+        </div>
         <code class="connection-url">${escapeHtml(challenge.connection_info)}</code>
       </div>
     </div>` : ''}
