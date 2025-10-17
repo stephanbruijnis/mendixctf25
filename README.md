@@ -1,42 +1,99 @@
 # Mendix CTF 2025 - Community Archive
 
-A community-maintained copy of the original Mendix CTF 2025 challenge portal. This project preserves the challenge data and provides a platform for sharing write-ups and solutions after the competition.
+A community-maintained archive of the original Mendix CTF 2025 challenge portal, preserving challenge data and workshop recordings for educational purposes.
 
-## 🎯 Overview
+## 🎯 Features
 
-This is a **community-driven archive** of the original Mendix CTF 2025 website, created to:
+- **26 CTF challenges** across three difficulty categories
+- **17 workshop recordings** from security experts
+- **Interactive hints system** with spoiler protection
+- **Community write-ups** and solutions
+- **Responsive design** for desktop and mobile
 
-- **Preserve challenge data** for educational purposes
-- **Provide a platform for write-ups** and solution sharing
-- **Maintain accessibility** to challenge information after the official CTF ends
-- **Support the cybersecurity learning community**
-
-The archived portal features:
-
-- **26 unique challenges** across three main categories
-- Interactive challenge browser with search and filtering capabilities
-- Detailed challenge information including files, hints, and connection details
-- Responsive design optimized for desktop and mobile devices
-
-## 🏗️ Project Structure
+## 📁 Structure
 
 ```
 mendixctf25/
-├── index.html              # Main application page
-├── assets/
-│   ├── css/
-│   │   └── style.css       # Application styles
-│   └── js/
-│       └── app.js          # Application logic
+├── index.html              # Challenge portal
+├── recordings.html         # Workshop recordings
+├── assets/css/style.css    # Shared styles (24KB)
+├── assets/js/app.js        # Application logic
 └── resources/
-    ├── data/
-    │   └── challenges.json  # Challenge data and metadata
-    └── files/               # Challenge-related files
-        ├── *.mpk           # Mendix package files
-        ├── *.txt           # Token and text files
-        ├── *.png           # Screenshot evidence
-        └── *.zip           # Resource archives
+    ├── data/challenges.json # Challenge data & write-ups
+    └── files/              # Challenge files (.mpk, .txt, .png, .zip)
 ```
+
+## 🎮 Challenge Categories
+
+| Category | Challenges | Points | Difficulty |
+|----------|------------|--------|------------|
+| 🍕 Pizza Mario | 19 | 106-387 | Beginner → Medium |
+| 🏥 Patient Portal | 6 | 317-498 | Hard → Insane |
+| ✨ Magic | 3 | 489-500 | Expert |
+
+*Lower points = easier (more teams solved them)*
+
+## � Workshop Recordings
+
+**17 sessions** covering security topics from hacking basics to advanced Mendix vulnerabilities.
+
+**Access:** Click "📹 Workshop Recordings" in the main navigation.
+
+**Topics include:** SAML security, API vulnerabilities, file upload risks, authentication bypasses, and more.
+
+## 🚀 Quick Start
+
+1. **Clone:** `git clone https://github.com/jopterhorst/mendixctf25.git`
+2. **Serve:** Open `index.html` or run `python -m http.server 8000`
+3. **Browse:** Navigate challenges, watch recordings, use hints system
+
+## 🔍 Key Features
+
+- **Search & Filter:** Find challenges by keyword or category
+- **Progressive Hints:** Click-to-reveal hints that auto-hide after 5 seconds  
+- **Deep Linking:** Direct URLs to specific challenges
+- **Write-ups:** Community solutions with detailed explanations
+- **No Dependencies:** Pure HTML/CSS/JS for maximum compatibility
+
+## 🤝 Contributing
+
+### Add Write-ups
+Edit `resources/data/challenges.json` and add to the `writeups` array:
+
+```json
+"writeups": [{
+  "title": "Your Write-up Title",
+  "author": "Your Name", 
+  "url": "https://your-writeup-url.com",
+  "platform": "Medium/Blog/GitHub"
+}]
+```
+
+### Guidelines
+- Detailed vulnerability explanations
+- Educational context and learning value
+- Credit original challenge creators
+
+## ⚠️ Important Notes
+
+- **Community archive** - not officially affiliated with Mendix
+- **Educational purpose** - for learning web application security
+- **Challenge environments** may no longer be active
+- **Workshop recordings** hosted on Mendix video platform
+
+## 📚 Learning Resources
+
+Perfect for:
+- Security researchers studying Mendix vulnerabilities
+- Students learning web application security
+- CTF participants preparing for competitions
+- Developers understanding secure coding practices
+
+---
+
+**🎓 Learn. Practice. Share.**
+
+*Community archive maintained since October 2025*
 
 ## 🎮 Challenge Categories
 
