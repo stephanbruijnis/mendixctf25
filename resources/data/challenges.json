@@ -116,7 +116,15 @@
     "connection_info": "https://patientportal2025.mendixctf.com",
     "next_id": null,
     "category": "Patient Portal - Hard to Insane",
-    "description": "Another day, another tester leaking something they shouldn't. You have no chance navigating your way to the flag though: It is simply not visible for you!"
+    "description": "Another day, another tester leaking something they shouldn't. You have no chance navigating your way to the flag though: It is simply not visible for you!",
+    "writeups": [
+      {
+        "title": "Write-up: Mendix CTF 2025 - Site Unseen (Tier 2)",
+        "author": "Johan Flikweert",
+        "url": "https://medium.com/@johan.flikweert/write-up-mendix-ctf-2025-site-unseen-tier-2-a2e1cb16d6c4",
+        "platform": "Medium"
+      }
+    ]
   },
   {
     "id": 24,
