@@ -328,7 +328,16 @@
     "tags": [],
     "attribution": "Easy",
     "value": 130,
-    "hints": [],
+    "hints": [
+      {
+        "order": 1,
+        "text": "Where is the API documentation stored?"
+      },
+      {
+        "order": 2,
+        "text": "Read through the API specs carefully"
+      }
+    ],
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
@@ -385,7 +394,16 @@
     "tags": [],
     "attribution": "Easy",
     "value": 115,
-    "hints": [],
+    "hints": [
+      {
+        "order": 1,
+        "text": "Can you switch languages?"
+      },
+      {
+        "order": 2,
+        "text": "Don't get Rick-rolled"
+      }
+    ],
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
