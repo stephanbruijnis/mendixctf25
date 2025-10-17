@@ -119,9 +119,9 @@
     "description": "Another day, another tester leaking something they shouldn't. You have no chance navigating your way to the flag though: It is simply not visible for you!",
     "writeups": [
       {
-        "title": "Write-up: Mendix CTF 2025 - Site Unseen (Tier 2)",
+        "title": "Write-up: Mendix CTF 2025 - No Accessible Vector (Tier 2)",
         "author": "Johan Flikweert",
-        "url": "https://medium.com/@johan.flikweert/write-up-mendix-ctf-2025-site-unseen-tier-2-a2e1cb16d6c4",
+        "url": "https://medium.com/@johan.flikweert/write-up-mendix-ctf-2025-no-accessible-vector-tier-2-d2550a6d89a7",
         "platform": "Medium"
       }
     ]
