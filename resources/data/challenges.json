@@ -338,6 +338,14 @@
         "text": "Read through the API specs carefully"
       }
     ],
+    "writeups": [
+      {
+        "title": "AI will generate that for me - Pizza Mario Beginner to Medium",
+        "author": "Stephan Bruijnis",
+        "url": "https://stephanbruijnis.dev/docs/notes/ctf/2025/pizza-mario-beginner-to-medium/ai-will-generate-that-for-me/",
+        "platform": "Personal Blog"
+      }
+    ],
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
@@ -367,6 +375,14 @@
       {
         "order": 1,
         "text": "Where do you use your password?"
+      }
+    ],
+    "writeups": [
+      {
+        "title": "Hiding in plain sight - Pizza Mario Beginner to Medium",
+        "author": "Stephan Bruijnis",
+        "url": "https://stephanbruijnis.dev/docs/notes/ctf/2025/pizza-mario-beginner-to-medium/hiding-in-plain-sight/",
+        "platform": "Personal Blog"
       }
     ],
     "connection_info": "https://pizzamario2025.mendixctf.com",
@@ -407,7 +423,15 @@
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
-    "description": "Translating is such a tedious job, but Mendix has a nice feature for that, so AI will do my translations."
+    "description": "Translating is such a tedious job, but Mendix has a nice feature for that, so AI will do my translations.",
+    "writeups": [
+      {
+        "title": "AI is my personal translator - Mendix CTF 2025",
+        "author": "Stephan Bruijnis",
+        "url": "https://stephanbruijnis.dev/docs/notes/ctf/2025/pizza-mario-beginner-to-medium/ai-is-my-personal-translator/",
+        "platform": "Personal Blog"
+      }
+    ]
   },
   {
     "id": 10,
@@ -430,6 +454,14 @@
     "attribution": "Easy",
     "value": 106,
     "hints": [],
+    "writeups": [
+      {
+        "title": "Gifts for me - Pizza Mario Beginner to Medium",
+        "author": "Stephan Bruijnis",
+        "url": "https://stephanbruijnis.dev/docs/notes/ctf/2025/pizza-mario-beginner-to-medium/gifts-for-me/",
+        "platform": "Personal Blog"
+      }
+    ],
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
