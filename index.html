@@ -26,20 +26,14 @@
           <div class="subtitle">Explore challenges and dive into the write-ups.</div>
         </div>
       </div>
-      <div class="toolbar" role="region" aria-label="Filters and search">
-        <div class="field">
+      <nav class="nav-tabs" role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="nav-tab active" aria-current="page">🚩 Challenges</a>
+        <a href="recordings.html" class="nav-tab">📹 Recordings</a>
+      </nav>
+      <div class="toolbar" role="region" aria-label="Search and filters">
+        <div class="search-field">
           <input id="q" class="input" placeholder="Search challenges (press / to focus)…" aria-label="Search" />
-        </div>
-        <div class="field">
-          <select id="cat" aria-label="Category">
-            <option value="">All categories</option>
-          </select>
-        </div>
-        <div class="field">
-          <button id="reset" class="btn secondary" title="Reset filters">Reset</button>
-        </div>
-        <div class="field">
-          <a href="recordings.html" class="btn primary">📹 Workshop Recordings</a>
+          <button id="reset" class="search-reset" title="Reset search" aria-label="Clear search">×</button>
         </div>
       </div>
     </div>

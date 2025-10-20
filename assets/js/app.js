@@ -1,7 +1,6 @@
 const state = {
   raw: [],
   query: '',
-  category: '',
   currentChallenge: null,
   currentTab: 'details'
 };
@@ -17,21 +16,15 @@ function truncate(str, n=160){
 function unique(arr){ return Array.from(new Set(arr.filter(Boolean))).sort(); }
 
 function renderFilters(){
-  const cats = unique(state.raw.map(x => x.category));
-  const catSelect = $('#cat');
-  const current = catSelect.value;
-  catSelect.innerHTML = '<option value="">All categories</option>' + cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
-  if (cats.includes(current)) catSelect.value = current;
+  // Category selector removed - no longer needed
 }
 
 function applyFilters(items){
   const q = state.query.trim().toLowerCase();
-  const cat = state.category;
   let out = items.filter(it => {
     const hay = [it.name, it.description, it.attribution, (it.files||[]).join(' '), (it.hints||[]).join(' '), (it.tags||[]).join(' '), it.category].join(' ').toLowerCase();
     const okQ = q ? hay.includes(q) : true;
-    const okCat = cat ? it.category === cat : true;
-    return okQ && okCat;
+    return okQ;
   });
 
   return out;
@@ -576,7 +569,7 @@ function update(){
   renderCards(filtered);
   // persist basic UI state
   localStorage.setItem('ctf-ui', JSON.stringify({
-    q: state.query, cat: state.category
+    q: state.query
   }));
 }
 
@@ -625,11 +618,9 @@ function hydrateFromState(){
     try{
       const p = JSON.parse(persisted);
       state.query = p.q || '';
-      state.category = p.cat || '';
     }catch{}
   }
   $('#q').value = state.query;
-  $('#cat').value = state.category;
   update();
   
   // Handle initial route
@@ -638,8 +629,7 @@ function hydrateFromState(){
 
 function bindUI(){
   $('#q').addEventListener('input', e=>{ state.query = e.target.value; update(); });
-  $('#cat').addEventListener('change', e=>{ state.category = e.target.value; update(); });
-  $('#reset').addEventListener('click', ()=>{ state.query=''; state.category=''; update(); hydrateFromState(); $('#q').value=''; $('#cat').value=''; });
+  $('#reset').addEventListener('click', ()=>{ state.query=''; update(); hydrateFromState(); $('#q').value=''; });
 
   // Handle browser back/forward buttons
   window.addEventListener('popstate', (e) => {

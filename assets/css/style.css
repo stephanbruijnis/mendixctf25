@@ -70,9 +70,110 @@ header{
 .title{font-size: clamp(22px, 4vw, 30px); font-weight: 800; letter-spacing: .3px}
 .subtitle{color:var(--muted); font-size: 13px}
 
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 16px;
+  background: var(--panel);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.nav-tab {
+  flex: 1;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: var(--muted);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.nav-tab:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.05);
+}
+
+.nav-tab.active {
+  background: var(--brand-2);
+  color: var(--bg);
+  box-shadow: var(--card-glow);
+}
+
+@media(max-width: 640px) {
+  .nav-tabs {
+    margin-top: 12px;
+  }
+  
+  .nav-tab {
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+}
+
 .toolbar{display:grid; grid-template-columns: 1fr; gap:12px; padding:12px 0 16px}
-@media(min-width:640px){
-  .toolbar{grid-template-columns: 2fr 1fr 0.8fr 1fr;}
+
+.search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-field .input {
+  padding-right: 44px; /* Make room for the reset button */
+}
+
+.search-reset {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 20px;
+  font-weight: 300;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.search-reset:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+}
+
+.search-reset:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.search-field:focus-within .search-reset {
+  opacity: 0.6;
+  pointer-events: auto;
+}
+
+.search-field .input:not(:placeholder-shown) ~ .search-reset {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search-field .search-reset:hover {
+  opacity: 1 !important;
 }
 
 .field{position:relative}
