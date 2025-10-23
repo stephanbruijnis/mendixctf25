@@ -316,6 +316,14 @@
     "attribution": "Medium",
     "value": 137,
     "hints": [],
+    "writeups": [
+      {
+        "title": "Jan pays! - Pizza Mario Beginner to Medium",
+        "author": "Stephan Bruijnis",
+        "url": "https://stephanbruijnis.dev/docs/notes/ctf/2025/pizza-mario-beginner-to-medium/jan-pays/",
+        "platform": "Personal Blog"
+      }
+    ], 
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
@@ -359,6 +367,14 @@
     "attribution": "Easy",
     "value": 129,
     "hints": [],
+    "writeups": [
+      {
+        "title": "I know better - Pizza Mario Beginner to Medium",
+        "author": "Stephan Bruijnis",
+        "url": "https://stephanbruijnis.dev/docs/notes/ctf/2025/pizza-mario-beginner-to-medium/i-know-better/",
+        "platform": "Personal Blog"
+      }
+    ],    
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
