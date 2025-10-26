@@ -123,6 +123,12 @@
         "author": "Johan Flikweert",
         "url": "https://medium.com/@johan.flikweert/write-up-mendix-ctf-2025-no-accessible-vector-tier-2-d2550a6d89a7",
         "platform": "Medium"
+      },
+      {
+        "title": "No Accessible Vector (CTF solution)",
+        "author": "Marius van der Knaap",
+        "url": "https://www.mariusvanderknaap.nl/blog/capture-the-flag-solutions-no-accessible-vector/",
+        "platform": "Personal Blog"
       }
     ]
   },
