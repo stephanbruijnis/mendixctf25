@@ -267,7 +267,15 @@
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
-    "description": "A glas is nothing without a good pole supporting it, a hacker might need some support breaking it!"
+    "description": "A glas is nothing without a good pole supporting it, a hacker might need some support breaking it!",
+    "writeups": [
+      {
+        "title": "Been there... - Pizza Mario Beginner to Medium",
+        "author": "Stephan Bruijnis",
+        "url": "https://stephanbruijnis.dev/docs/notes/ctf/2025/pizza-mario-beginner-to-medium/been-there/",
+        "platform": "Personal Blog"
+      }
+    ]
   },
   {
     "id": 8,
@@ -293,7 +301,15 @@
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
-    "description": "Oops. It seems some of our bakers might have lost their password..."
+    "description": "Oops. It seems some of our bakers might have lost their password...", 
+    "writeups": [
+      {
+        "title": "Baker's delight - Pizza Mario Beginner to Medium",
+        "author": "Stephan Bruijnis",
+        "url": "https://stephanbruijnis.dev/docs/notes/ctf/2025/pizza-mario-beginner-to-medium/bakers-delight/",
+        "platform": "Personal Blog"
+      }
+    ]
   },
   {
     "id": 12,
@@ -417,7 +433,15 @@
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
-    "description": "People are so ungrateful these days, complaining about every minor issue. "
+    "description": "People are so ungrateful these days, complaining about every minor issue. ", 
+    "writeups": [
+      {
+        "title": "Pizza Complaint - Pizza Mario Beginner to Medium",
+        "author": "Stephan Bruijnis",
+        "url": "https://stephanbruijnis.dev/docs/notes/ctf/2025/pizza-mario-beginner-to-medium/pizza-complaint/",
+        "platform": "Personal Blog"
+      }
+    ]
   },
   {
     "id": 1,
@@ -460,7 +484,15 @@
     "connection_info": "https://pizzamario2025.mendixctf.com",
     "next_id": null,
     "category": "Pizza Mario - Beginner to Medium",
-    "description": "Spending big on gifts is what I do, limits are not my problem!"
+    "description": "Spending big on gifts is what I do, limits are not my problem!",
+    "writeups": [
+      {
+        "title": "Cashcow! - Pizza Mario Beginner to Medium",
+        "author": "Stephan Bruijnis",
+        "url": "https://stephanbruijnis.dev/docs/notes/ctf/2025/pizza-mario-beginner-to-medium/cashcow/",
+        "platform": "Personal Blog"
+      }
+    ]
   },
   {
     "id": 3,
